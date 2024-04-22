@@ -7,9 +7,6 @@ const UserSchema = new Schema<IUser>(
         phoneNumber: {
             type: String,
         },
-        email: {
-            type: String,
-        },
         password: {
             type: String
         },

@@ -1,3 +1,4 @@
+import { ICompany } from "./Company";
 import { IFile } from "./File";
 
 export enum Gender {
@@ -10,10 +11,11 @@ type SocialMedia = {
     instagram: string;
     linkedin: string;
     telegram: string;
-  };
+};
 
 export interface IContact {
     id: string;
+    company: ICompany;
     avatar: IFile;
     fullName: string;
     phoneNumber: string;
