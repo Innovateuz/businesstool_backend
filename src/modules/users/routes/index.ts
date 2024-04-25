@@ -1,7 +1,6 @@
 import { Router } from "express";
 import ValidateRequest from "../../../middlewares/ValidationRequest";
 import requestSchema from "../validations/index";
-
 import ClientsController from "../controllers/index";
 
 const router = Router({ mergeParams: true });

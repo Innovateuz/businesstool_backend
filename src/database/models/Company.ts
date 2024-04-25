@@ -1,13 +1,9 @@
 import { Schema, model } from 'mongoose';
-import { IUser } from '../../domain/entities/User';
-import { string } from 'joi';
+import { ICompany } from '../../domain/entities/Company';
 
-const UserSchema = new Schema<IUser>(
+const CompanySchema = new Schema<ICompany>(
 	{
-		phoneNumber: {
-			type: String,
-		},
-		password: {
+		name: {
 			type: String,
 		},
 		isDeleted: {
@@ -27,4 +23,4 @@ const UserSchema = new Schema<IUser>(
 	},
 );
 
-export default model<IUser>('User', UserSchema);
+export default model<ICompany>('Company', CompanySchema);

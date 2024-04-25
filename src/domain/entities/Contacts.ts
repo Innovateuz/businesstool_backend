@@ -6,7 +6,7 @@ export enum Gender {
     female = "Female",
 }
 
-type SocialMedia = {
+export type SocialMedia = {
     facebook: string;
     instagram: string;
     linkedin: string;
@@ -22,7 +22,7 @@ export interface IContact {
     email: string;
     socialMedia: SocialMedia;
     gender: Gender;
-    birthDate: string;
+    birthDate: Date;
     isDeleted: boolean;
     createdAt: Date;
     updatedAt: Date;
