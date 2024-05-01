@@ -7,7 +7,10 @@ const router = Router({ mergeParams: true });
 const ctrl = ContactController;
 
 router
-	.route('/contact')
+	.route('/')
+	.get(ctrl.GetContact)
 	.post(ValidateRequest(requestSchema.createContact), ctrl.createContact)
-	.post(ValidateRequest(requestSchema.updateContact), ctrl.GetContact)
+	.put(ValidateRequest(requestSchema.updateContact), ctrl.updateContact)
 	.delete(ValidateRequest(requestSchema.removeContact), ctrl.removeContact);
+
+	export default router;

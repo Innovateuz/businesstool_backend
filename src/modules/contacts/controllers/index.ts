@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import ContactRepository from '../repo/index';
+import ContactService from '../services/index';
 
 class ContactController {
 	async createContact(req: Request, res: Response) {
@@ -8,7 +8,7 @@ class ContactController {
 				code,
 				message,
 				data: result,
-			} = await ContactRepository.createContact(req.body);
+			} = await ContactService.createContact(req.body);
 
 			res.status(code).send({
 				code,
@@ -27,16 +27,37 @@ class ContactController {
 				code,
 				message,
 				data: result,
-			} = await ContactRepository.getContactById();
+			} = await ContactService.getContacts();
 
-    res.status(code).send({
+			res.status(code).send({
 				code,
 				msg: message,
 				data: result,
 			});
 		} catch (error) {
 			res.status(500).send({ msg: 'SERVER_ERROR', data: null });
-			throw new Error(`ContactController controller [create] error: ${error}`);
+			throw new Error(`ContactController controller [get] error: ${error}`);
+		}
+	}
+
+	async updateContact(req: Request, res: Response) {
+		try {
+			const query: any = req.query;
+
+			const {
+				code,
+				message,
+				data: result,
+			} = await ContactService.updateContact(query);
+
+			res.status(code).send({
+				code,
+				msg: message,
+				data: result,
+			});
+		} catch (error) {
+			res.status(500).send({ msg: 'SERVER_ERROR', data: null });
+			throw new Error(`Task controller [update] error: ${error}`);
 		}
 	}
 
@@ -48,7 +69,7 @@ class ContactController {
 				code,
 				message,
 				data: result,
-			} = await ContactRepository.updateContact(query);
+			} = await ContactService.removeContact(query);
 
 			res.status(code).send({
 				code,

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import CompanyRepository from '../repo/index';
+import CompaniesService from '../services/index';
 
 class CompanyController {
 	async createCompany(req: Request, res: Response) {
@@ -8,7 +8,7 @@ class CompanyController {
 				code,
 				message,
 				data: result,
-			} = await CompanyRepository.createCompany(req.body);
+			} = await CompaniesService.createCompany(req.body);
 
 			res.status(code).send({
 				code,
@@ -27,7 +27,7 @@ class CompanyController {
 				code,
 				message,
 				data: result,
-			} = await CompanyRepository.getCompanyById();
+			} = await CompaniesService.getCompany();
 
 			res.status(code).send({
 				code,
@@ -36,7 +36,28 @@ class CompanyController {
 			});
 		} catch (error) {
 			res.status(500).send({ msg: 'SERVER_ERROR', data: null });
-			throw new Error(`CompanyController controller [create] error: ${error}`);
+			throw new Error(`CompanyController controller [get] error: ${error}`);
+		}
+	}
+
+	async updateCompany(req: Request, res: Response) {
+		try {
+			const query: any = req.query;
+
+			const {
+				code,
+				message,
+				data: result,
+			} = await CompaniesService.updateCompany(query);
+
+			res.status(code).send({
+				code,
+				msg: message,
+				data: result,
+			});
+		} catch (error) {
+			res.status(500).send({ msg: 'SERVER_ERROR', data: null });
+			throw new Error(`Task controller [update] error: ${error}`);
 		}
 	}
 
@@ -48,7 +69,7 @@ class CompanyController {
 				code,
 				message,
 				data: result,
-			} = await CompanyRepository.removeCompany(query);
+			} = await CompaniesService.removeCompany(query);
 
 			res.status(code).send({
 				code,
@@ -57,7 +78,7 @@ class CompanyController {
 			});
 		} catch (error) {
 			res.status(500).send({ msg: 'SERVER_ERROR', data: null });
-			throw new Error(`Task controller [create] error: ${error}`);
+			throw new Error(`Task controller [delete] error: ${error}`);
 		}
 	}
 }

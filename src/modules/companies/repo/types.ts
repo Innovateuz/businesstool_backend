@@ -2,12 +2,19 @@ import { ICompany } from "../../../domain/entities/Company";
 
 export type TInsertCompany = {
 	name: string;
-	company: ICompany;
 };
 
 export type TGetCompany = {
 	companyId: string;
-	company: ICompany;
+};
+
+export type TByIdCompany = {
+	companyId: string;
+};
+
+export type TUpdateCompany = {
+	name: string;
+	companyId: string;
 };
 
 export type TRemoveCompany = {

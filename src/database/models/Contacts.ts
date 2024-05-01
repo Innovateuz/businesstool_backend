@@ -1,13 +1,17 @@
 import { Schema, model } from 'mongoose';
-import { Gender, IContact } from '../../domain/entities/Contacts';
+import { IContact } from '../../domain/entities/Contacts';
 
-const ConstactSchema = new Schema<Gender, IContact>(
+const ConstactSchema = new Schema<IContact>(
 	{
-		companyName: {
+		company: {
+			type: Schema.Types.ObjectId,
+			ref: 'Company',
+		},
+		firstName: {
 			type: String,
 		},
-		fullName: {
-			type: String,
+		lastName: {
+			type: String
 		},
 		phoneNumber: {
 			type: String,
@@ -18,8 +22,9 @@ const ConstactSchema = new Schema<Gender, IContact>(
 		socialMedia: {
 			type: String,
 		},
-		gender:{
-			type: Gender,
+		gender: {
+			type: String,
+			enum: ['Male', 'Female'],
 		},
 		birthDate: {
 			type: String,
@@ -41,8 +46,4 @@ const ConstactSchema = new Schema<Gender, IContact>(
 	},
 );
 
-const GenderSchema = new Schema<Gender>({
-	
-});
-
-export default model<Gender, IContact>('Contact', ConstactSchema);
+export default model<IContact>('Contact', ConstactSchema);

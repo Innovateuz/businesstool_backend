@@ -1,18 +1,28 @@
 import { IContact } from '../../../domain/entities/Contacts';
 
 export type TInsertContact = {
-	fullName: string;
+	firstName: string;
+	lastName: string;
 	phoneNumber: string;
+	gender: string;
 	email: string;
-	birthDate: Date;
+	birthDate: string;
+	socialMedia: string;
+};
+
+export type TGetContactById = {
+	contactId: string;
 };
 
 export type TUpdateContact = {
 	contactId: string;
-	fullName: string;
+	firstName: string;
+	lastName: string;
 	phoneNumber: string;
+	gender: string;
 	email: string;
-	birthDate: Date;
+	birthDate: string;
+	socialMedia: string;
 };
 
 export type TRemoveContact = {

@@ -8,19 +8,26 @@ interface TypeSchema {
 
 const schema: TypeSchema = {
 	createCompany: Joi.object().keys({
-		fullName: Joi.string().trim().required(),
+		body: Joi.object().keys({
+			name: Joi.string().required(),
+		}),
 	}),
+
 	updateCompany: Joi.object().keys({
-		fullName: Joi.string().trim().required(),
-	}),
-	removeCompany: Joi.object().keys({
-		query: Joi.object()
-			.keys({
-				companytId: Joi.string()
+		query: Joi.object().keys({
+				companyId: Joi.string()
 					.pattern(/^[0-9a-fA-F]{24}$/)
 					.required(),
-			})
-			.required(),
+				name: Joi.string().optional(),
+			}),
+	}),
+
+	removeCompany: Joi.object().keys({
+		query: Joi.object().keys({
+			companyId: Joi.string()
+				.pattern(/^[0-9a-fA-F]{24}$/)
+				.required(),
+		}),
 	}),
 };
 

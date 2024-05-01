@@ -9,22 +9,42 @@ import {
 class ContactRepository {
 	async createContact(data: TInsertContact) {
 		try {
-			const { fullName, phoneNumber, email, birthDate } = data;
+			const {
+				firstName,
+				lastName,
+				phoneNumber,
+				gender,
+				email,
+				birthDate,
+				socialMedia,
+			} = data;
 
 			const currentDate = new Date();
 
 			const contact = new Contact({
-				fullName,
+				firstName,
+				lastName,
 				phoneNumber,
+				gender,
 				email,
 				birthDate,
+				socialMedia,
 			});
 
 			await contact.save();
 
 			return contact;
-		} catch (error: unknown) {
+		} catch (error: any) {
 			console.error(`ERROR: [contact.repo] createContact: ${error}`);
+			throw error;
+		}
+	}
+
+	async getContact() {
+		try {
+			return await Contact.find({ isDeleted: false });
+		} catch (error: any) {
+			console.error(`ERROR: [contact.repo] getContact: ${error}`);
 			throw error;
 		}
 	}
@@ -34,7 +54,7 @@ class ContactRepository {
 			const { contactId } = data;
 
 			return await Contact.findOne({ _id: contactId, isDeleted: false });
-		} catch (error: unknown) {
+		} catch (error: any) {
 			console.error(`ERROR: [contacts.repo] getContactById: ${error}`);
 			throw error;
 		}
@@ -42,16 +62,33 @@ class ContactRepository {
 
 	async updateContact(data: TUpdateContact) {
 		try {
-			const { contactId, fullName, phoneNumber, email, birthDate } = data;
+			const {
+				contactId,
+				firstName,
+				lastName,
+				phoneNumber,
+				gender,
+				email,
+				birthDate,
+				socialMedia,
+			} = data;
 
 			return await Contact.findOneAndUpdate(
 				{
 					_id: contactId,
 					isDeleted: false,
 				},
-				{ fullName, phoneNumber, email, birthDate },
+				{
+					firstName,
+					lastName,
+					phoneNumber,
+					gender,
+					email,
+					birthDate,
+					socialMedia,
+				},
 			);
-		} catch (error: unknown) {
+		} catch (error: any) {
 			console.error(`ERROR: [contacts.repo] updateContact: ${error}`);
 			throw error;
 		}
@@ -59,10 +96,13 @@ class ContactRepository {
 
 	async removeContact(data: TRemoveContact) {
 		try {
-			const { contactId } = data;
+			const { contact } = data;
 
-			return Contact.findByIdAndDelete({ _id: contactId }, { isDeleted: true });
-		} catch (error: unknown) {
+			return Contact.findByIdAndUpdate(
+				{ _id: contact.id },
+				{ isDeleted: true },
+			);
+		} catch (error: any) {
 			console.error(`ERROR: [contact.repo] removeContact: ${error}`);
 			throw error;
 		}

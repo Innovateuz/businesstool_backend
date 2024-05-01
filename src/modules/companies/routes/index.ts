@@ -7,7 +7,10 @@ const router = Router({ mergeParams: true });
 const ctrl = CompanyController;
 
 router
-	.route('/company')
+	.route('/')
 	.post(ValidateRequest(requestSchema.createCompany), ctrl.createCompany)
-	.post(ValidateRequest(requestSchema.updateCompany), ctrl.GetCompany)
+	.get(ctrl.GetCompany)
+	.put(ValidateRequest(requestSchema.updateCompany), ctrl.updateCompany)
 	.delete(ValidateRequest(requestSchema.removeCompany), ctrl.removeCompany);
+
+export default router;

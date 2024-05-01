@@ -1,27 +1,46 @@
 import Joi from 'joi';
 
 interface TypeSchema {
-	createContact: Joi.Schema<unknown>;
-	updateContact: Joi.Schema<unknown>;
-	removeContact: Joi.Schema<unknown>;
+	createContact: Joi.Schema<any>;
+	updateContact: Joi.Schema<any>;
+	removeContact: Joi.Schema<any>;
 }
 
 const schema: TypeSchema = {
 	createContact: Joi.object().keys({
-		fullName: Joi.string().trim().required(),
-		phoneNumber: Joi.string().trim().required(),
-		avatarId: Joi.string()
-			.pattern(/^[0-9a-fA-F]{24}$/)
-			.optional(),
-		email: Joi.string().trim().optional(),
-		birthDate: Joi.string().optional(),
+		body: Joi.object().keys({
+			firstName: Joi.string().required(),
+			lastName: Joi.string().required(),
+			phoneNumber: Joi.string().required(),
+			gender: Joi.string().required(),
+			avatarId: Joi.string()
+				.pattern(/^[0-9a-fA-F]{24}$/)
+				.optional(),
+			email: Joi.string().optional(),
+			birthDate: Joi.string().optional(),
+			socialMedia: Joi.string().optional(),
+		}),
 	}),
+
 	updateContact: Joi.object().keys({
-		fullName: Joi.string().trim().optional(),
-		phoneNumber: Joi.string().trim().optional(),
-		email: Joi.string().trim().optional(),
-		birthDate: Joi.string().optional(),
+		query: Joi.object()
+			.keys({
+				firstName: Joi.string().optional(),
+				lastName: Joi.string().optional(),
+				phoneNumber: Joi.string().optional(),
+				gender: Joi.string().optional(),
+				avatarId: Joi.string()
+					.pattern(/^[0-9a-fA-F]{24}$/)
+					.optional(),
+				email: Joi.string().optional(),
+				birthDate: Joi.string().optional(),
+				socialMedia: Joi.string().optional(),
+				contactId: Joi.string()
+					.pattern(/^[0-9a-fA-F]{24}$/)
+					.required(),
+			})
 	}),
+
 	removeContact: Joi.object().keys({
 		query: Joi.object()
 			.keys({
