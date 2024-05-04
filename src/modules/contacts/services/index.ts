@@ -1,7 +1,11 @@
-import { fail, ok } from "../../../utils/response";
-import { TInsertContact, TGetContactById, TUpdateContact, TRemoveContact } from './types';
-import ContactRepo from "../repo/index";
-
+import { fail, ok } from '../../../utils/response';
+import {
+	TInsertContact,
+	TGetContactById,
+	TUpdateContact,
+	TRemoveContact,
+} from './types';
+import ContactRepo from '../repo/index';
 
 const repo = new ContactRepo();
 
@@ -28,6 +32,10 @@ class ContactService {
 				socialMedia,
 			});
 
+			if (contact) {
+				return fail(403, 'Company already exists');
+			}
+
 			return ok(contact);
 		} catch (error: any) {
 			console.error(`ERROR: [contacts.services] createContact: ${error}`);
@@ -38,6 +46,10 @@ class ContactService {
 	async getContacts() {
 		try {
 			const contacts = await repo.getContact();
+
+			if (!contacts) {
+				return fail(404, 'Contact not found');
+			}
 
 			return ok(contacts);
 		} catch (error: any) {
@@ -50,7 +62,13 @@ class ContactService {
 		try {
 			const { contactId } = data;
 
-			return await repo.getContactById({ contactId });
+			const contact = await repo.getContactById({ contactId });
+
+			if (!contact) {
+				return fail(404, 'Contact not found');
+			}
+
+			return ok(contact);
 		} catch (error: any) {
 			console.error(`ERROR: [contact.services] getByContactId: ${error}`);
 			return fail(500, error);
@@ -78,8 +96,12 @@ class ContactService {
 				gender,
 				email,
 				birthDate,
-	   socialMedia
+				socialMedia,
 			});
+
+			if (newContact) {
+				return fail(403, 'Contact already exists');
+			}
 
 			return ok(newContact);
 		} catch (error: any) {

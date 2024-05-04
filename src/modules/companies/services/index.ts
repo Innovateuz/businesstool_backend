@@ -1,7 +1,11 @@
 import { fail, ok } from '../../../utils/response';
-import { TInsertCompany, TGetCompanyById, TUpdateCompany, TRemoveCompany } from './types';
+import {
+	TInsertCompany,
+	TGetCompanyById,
+	TUpdateCompany,
+	TRemoveCompany,
+} from './types';
 import CompanyRepository from '../repo/index';
-
 
 const repo = new CompanyRepository();
 
@@ -11,6 +15,10 @@ class CompaniesService {
 			const { name } = data;
 
 			const company = await repo.createCompany({ name });
+
+			if (company) {
+				return fail(403, 'Company already exists');
+			}
 
 			return ok(company);
 		} catch (error: any) {
@@ -23,6 +31,10 @@ class CompaniesService {
 		try {
 			const companies = await repo.getCompany();
 
+			if (!companies) {
+				return fail(404, 'Company not found');
+			}
+
 			return ok(companies);
 		} catch (error: any) {
 			console.error(`ERROR: [company.services] getCompany: ${error}`);
@@ -30,17 +42,34 @@ class CompaniesService {
 		}
 	}
 
+	async getCompanyById(data: TGetCompanyById) {
+		try {
+			const { companyId } = data;
+			const company = await repo.getCompanyById({ companyId });
+
+			if (!company) {
+				return fail(404, 'Company not found');
+			}
+
+			return ok(company);
+		} catch (error: any) {
+			console.error(`ERROR: [company.services] updateCompany: ${error}`);
+			return fail(500, error);
+		}
+	}
+
 	async updateCompany(data: TUpdateCompany) {
 		try {
-			const {
-				companyId,
-				name
-			} = data;
+			const { companyId, name } = data;
 
 			const newCompany = await repo.updateCompany({
 				companyId,
-			 name
+				name,
 			});
+
+			if (!newCompany) {
+				return fail(404, 'CompanyId not found');
+			}
 
 			return ok(newCompany);
 		} catch (error: any) {

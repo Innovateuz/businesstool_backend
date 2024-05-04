@@ -2,6 +2,7 @@ import Company from '../../../database/models/Company';
 import {
 	TInsertCompany,
 	TByIdCompany,
+	TGetByIdCompany,
 	TUpdateCompany,
 	TRemoveCompany,
 } from './types';
@@ -35,11 +36,14 @@ class CompanyRepository {
 		}
 	}
 
-	async getCompanyById(data: TByIdCompany) {
+	async getCompanyById(data: TGetByIdCompany) {
 		try {
 			const { companyId } = data;
 
-			return await Company.findOne({ _id: companyId, isDeleted: false });
+			return await Company.findOne({
+				_id: companyId,
+				isDeleted: false,
+			});
 		} catch (error: any) {
 			console.error(`ERROR: [company.repo] getCompanyById: ${error}`);
 			throw error;

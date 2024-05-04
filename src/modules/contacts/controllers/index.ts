@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
-import ContactService from '../services/index';
+import contactService from '../services/index';
 
-class ContactController {
+class contactController {
 	async createContact(req: Request, res: Response) {
 		try {
 			const {
 				code,
 				message,
 				data: result,
-			} = await ContactService.createContact(req.body);
+			} = await contactService.createContact(req.body);
 
 			res.status(code).send({
 				code,
@@ -21,22 +21,43 @@ class ContactController {
 		}
 	}
 
-	async GetContact(req: Request, res: Response) {
+	async getContact(req: Request, res: Response) {
 		try {
 			const {
 				code,
 				message,
 				data: result,
-			} = await ContactService.getContacts();
+			} = await contactService.getContacts();
 
 			res.status(code).send({
 				code,
 				msg: message,
 				data: result,
 			});
-		} catch (error) {
+		} catch (error: any) {
 			res.status(500).send({ msg: 'SERVER_ERROR', data: null });
 			throw new Error(`ContactController controller [get] error: ${error}`);
+		}
+	}
+
+	async getContactById(req: Request, res: Response) {
+		try {
+			const query: any = req.query;
+
+			const {
+				code,
+				message,
+				data: result,
+			} = await contactService.getContactById(query);
+
+			res.status(code).send({
+				code,
+				msg: message,
+				data: result,
+			});
+		} catch (error: any) {
+			res.status(500).send({ msg: 'SERVER_ERROR', data: null });
+			throw new Error(`contactController controller [getById] error: ${error}`);
 		}
 	}
 
@@ -48,14 +69,14 @@ class ContactController {
 				code,
 				message,
 				data: result,
-			} = await ContactService.updateContact(query);
+			} = await contactService.updateContact(query);
 
 			res.status(code).send({
 				code,
 				msg: message,
 				data: result,
 			});
-		} catch (error) {
+		} catch (error: any) {
 			res.status(500).send({ msg: 'SERVER_ERROR', data: null });
 			throw new Error(`Task controller [update] error: ${error}`);
 		}
@@ -69,18 +90,18 @@ class ContactController {
 				code,
 				message,
 				data: result,
-			} = await ContactService.removeContact(query);
+			} = await contactService.removeContact(query);
 
 			res.status(code).send({
 				code,
 				msg: message,
 				data: result,
 			});
-		} catch (error) {
+		} catch (error: any) {
 			res.status(500).send({ msg: 'SERVER_ERROR', data: null });
 			throw new Error(`Task controller [create] error: ${error}`);
 		}
 	}
 }
 
-export default new ContactController();
+export default new contactController();

@@ -60,6 +60,7 @@ class ContactRepository {
 		}
 	}
 
+
 	async updateContact(data: TUpdateContact) {
 		try {
 			const {

@@ -9,7 +9,8 @@ const ctrl = CompanyController;
 router
 	.route('/')
 	.post(ValidateRequest(requestSchema.createCompany), ctrl.createCompany)
-	.get(ctrl.GetCompany)
+	.get(ctrl.getCompany)
+	.get(ValidateRequest(requestSchema.getCompanyById),ctrl.getCompanyById)
 	.put(ValidateRequest(requestSchema.updateCompany), ctrl.updateCompany)
 	.delete(ValidateRequest(requestSchema.removeCompany), ctrl.removeCompany);
 

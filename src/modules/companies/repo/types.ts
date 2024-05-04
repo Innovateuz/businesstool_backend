@@ -8,8 +8,13 @@ export type TGetCompany = {
 	companyId: string;
 };
 
+export type TGetByIdCompany = {
+	companyId: string;
+};
+
 export type TByIdCompany = {
 	companyId: string;
+	name: string;
 };
 
 export type TUpdateCompany = {
