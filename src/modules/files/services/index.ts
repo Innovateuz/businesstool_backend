@@ -83,6 +83,7 @@ class FileService {
     getFilesByIds(fileIds: string[]) {
         return FileRepository.getFilesByIds(fileIds);
     }
+    
 }
 
 export default new FileService();
