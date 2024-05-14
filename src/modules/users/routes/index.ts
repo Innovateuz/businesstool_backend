@@ -1,15 +1,12 @@
 import { Router } from "express";
 import ValidateRequest from "../../../middlewares/ValidationRequest";
 import requestSchema from "../validations/index";
-
-import UsersController from "../controllers/index";
+import ClientsController from "../controllers/index";
 
 const router = Router({ mergeParams: true });
-const ctrl = UsersController;
+const ctrl = ClientsController;
 
 router
     .route("/")
-    .post(ValidateRequest(requestSchema.createUser), ctrl.createUser)
-    .delete(ValidateRequest(requestSchema.removeUser), ctrl.removeUser);
-
-export default router;
+    .post(ValidateRequest(requestSchema.createClient), ctrl.createClient)
+    .delete(ValidateRequest(requestSchema.removeClient), ctrl.removeClient);

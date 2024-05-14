@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import UsersService from "../services/index";
+import ClientService from "../services/index";
 
-class UsersController {
-    async createUser(req: Request, res: Response) {
+class ClientsController {
+    async createClient(req: Request, res: Response) {
         try {
             const {
                 code,
                 message,
                 data: result,
-            } = await UsersService.createUser(req.body);
+            } = await ClientService.createClient(req.body);
 
             res.status(code).send({
                 code,
@@ -21,7 +21,7 @@ class UsersController {
         }
     }
 
-    async removeUser(req: Request, res: Response) {
+    async removeClient(req: Request, res: Response) {
         try {
           const query: any = req.query;
     
@@ -29,7 +29,7 @@ class UsersController {
             code,
             message,
             data: result,
-          } = await UsersService.removeUser(query);
+          } = await ClientService.removeClient(query);
     
           res.status(code).send({
             code,
@@ -38,10 +38,10 @@ class UsersController {
           });
         } catch (error) {
           res.status(500).send({ msg: "SERVER_ERROR", data: null });
-          throw new Error(`Task controller [removeUser] error: ${error}`);
+          throw new Error(`Task controller [create] error: ${error}`);
         }
       }
 }
 
 
-export default new UsersController();
+export default new ClientsController();

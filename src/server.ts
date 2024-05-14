@@ -16,7 +16,6 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(routes);
 
-
 process.on("SIGINT", function () {
     console.log("\nGracefully shutting down from SIGINT (Ctrl-C)");
 
